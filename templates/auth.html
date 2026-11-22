@@ -1,0 +1,31 @@
+{% extends "base.html" %}{% block title %}{{ 'Create account' if mode=='register' else 'Sign in' }} · STU{% endblock %}
+{% block content %}
+<div class="auth-grid">
+ <section class="auth-story">
+  <div class="eyebrow"><span class="pulse"></span> CLASSIFIED INVESTIGATION // ACCESS PORTAL</div>
+  <h1>Every clue<br>leaves a <em>trace.</em></h1>
+  <p class="muted lead">Twelve challenges. Four characters. One truth waiting to be uncovered.</p>
+  <div class="case-stamp"><span>CASE NO.</span><strong>STU-0412</strong><span>STATUS: OPEN</span></div>
+  <div class="auth-bottom"><span>DO NOT TRUST THE FIRST STORY YOU HEAR.</span><span>◈ 01 / 04</span></div>
+ </section>
+ <section class="auth-card">
+  <div class="eyebrow">PLAYER AUTHENTICATION</div>
+  <h2>{{ 'Create your account' if mode=='register' else 'Welcome back' }}</h2>
+  <p class="muted">{{ 'Set up your investigator profile to enter the case.' if mode=='register' else 'Sign in to continue your investigation.' }}</p>
+  <form method="post" class="form-stack">
+   <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+   {% if mode=='register' %}
+    <label>USERNAME<input name="username" placeholder="e.g. cipherfox" minlength="3" maxlength="24" required autocomplete="username"></label>
+    <label>EMAIL ADDRESS<input type="email" name="email" placeholder="you@example.com" required autocomplete="email"></label>
+    <label>PASSWORD<input type="password" name="password" placeholder="At least 10 characters" minlength="10" required autocomplete="new-password"></label>
+   {% else %}
+    <label>USERNAME OR EMAIL<input name="identity" placeholder="Your username or email" required autocomplete="username"></label>
+    <label>PASSWORD<input type="password" name="password" placeholder="Your password" required autocomplete="current-password"></label>
+   {% endif %}
+   <button class="btn primary full">{{ 'Create account' if mode=='register' else 'Enter the investigation' }} <span>↗</span></button>
+  </form>
+  <div class="auth-switch">{{ 'Already registered?' if mode=='register' else 'New to the case?' }} <a href="{{ url_for('login' if mode=='register' else 'register') }}">{{ 'Sign in' if mode=='register' else 'Create an account' }}</a></div>
+  <div class="tiny-note">ACCESS IS LOGGED. PROCEED WITH DISCRETION.</div>
+ </section>
+</div>
+{% endblock %}

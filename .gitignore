@@ -1,0 +1,19 @@
+ .venv/
+__pycache__/
+*.pyc
+treasure.db
+.env
+
+# Python environments and cache
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+
+# Secrets
+.env
+.env.*
+!.env.example
+
+# Local development files
+.DS_Store

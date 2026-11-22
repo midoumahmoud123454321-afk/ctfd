@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4ead1">
+  <title>{% block title %}STU // CASE FILE{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&family=Oswald:wght@500;600;700&family=Playfair+Display:wght@600;700;800&family=Orbitron:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body data-theme="police">
+<div class="stu-backdrop" aria-hidden="true"><div class="stu-photo-track">
+  {% for copy in range(2) %}{% for photo in stu_photos %}<div class="stu-photo-tile"><img src="{{ url_for('static', filename='stu_photos/' ~ photo) }}" alt=""><span class="blood-cross">✕</span></div>{% endfor %}{% endfor %}
+</div></div>
+<div class="noise"></div>
+{% if not me %}
+<div class="auth-theme-picker theme-picker" aria-label="Choose website design">
+  <span>DESIGN</span>
+  <button type="button" data-theme-choice="police" aria-pressed="true">◧ CASE</button>
+  <button type="button" data-theme-choice="paper" aria-pressed="false">▤ PAPER</button>
+  <button type="button" data-theme-choice="cyber" aria-pressed="false">✧ NEON</button>
+</div>
+{% endif %}
+{% if me %}
+<header class="topbar">
+  <a class="brand" href="{{ url_for('dashboard') }}"><span class="brand-mark">S</span><span>STU <i>//</i> CASE FILE</span></a>
+  <button class="mobile-menu" id="menuBtn" aria-label="Toggle navigation">☰</button>
+  <nav id="mainNav">
+    <a href="{{ url_for('dashboard') }}">Overview</a>
+    <a href="{{ url_for('challenges') }}">Investigation</a>
+    <a href="{{ url_for('collina_files') }}">La Collina Files</a>
+    <a href="{{ url_for('leaderboard') }}">Leaderboard</a>
+    <a href="{{ url_for('team') }}">Team</a>
+    <a href="{{ url_for('settings') }}">Account</a>
+    {% if is_admin %}<a class="admin-nav-link" href="{{ url_for('admin_dashboard') }}">Admin ↗</a>{% endif %}
+    <form method="post" action="{{ url_for('logout') }}" class="nav-logout"><input type="hidden" name="_csrf" value="{{ csrf_token() }}"><button>Log out ↗</button></form>
+    <div class="theme-picker" aria-label="Choose website design">
+      <span>DESIGN</span>
+      <button type="button" data-theme-choice="police" aria-pressed="true">◧ CASE</button>
+      <button type="button" data-theme-choice="paper" aria-pressed="false">▤ PAPER</button>
+      <button type="button" data-theme-choice="cyber" aria-pressed="false">✧ NEON</button>
+    </div>
+  </nav>
+</header>
+{% endif %}
+<main class="{% if me %}page-shell{% else %}auth-shell{% endif %}">
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}<div class="flash-stack">{% for category, message in messages %}<div class="flash {{ category }}">{{ message }}</div>{% endfor %}</div>{% endif %}
+  {% endwith %}
+  {% block content %}{% endblock %}
+</main>
+<footer class="footer"><span>STU // THE TRUTH IS BURIED</span><span>SECURE INVESTIGATION PLATFORM · 2026</span></footer>
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+</body></html>

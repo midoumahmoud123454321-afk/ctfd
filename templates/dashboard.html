@@ -1,0 +1,38 @@
+{% extends "base.html" %}{% block title %}Overview · STU{% endblock %}{% block content %}
+<div class="page-heading"><div><div class="eyebrow">INVESTIGATION CONTROL // 001</div><h1>Good to see you, <em>{{ me.username }}.</em></h1><p class="muted">Your team's investigation status at a glance.</p></div><div class="status-pill"><span class="pulse"></span> CASE ACTIVE</div></div>
+
+<section class="panel overview-story">
+ <div class="eyebrow">THE CASE // INTEGRATION DAY</div>
+ <h2>The Night at La Collina</h2>
+ <div class="story-copy">
+  <p>The evening before Integration Day, Stou and four other members of the board gathered at La Collina to make the final preparations for the following morning.</p>
+  <p>It wasn't the smoothest meeting. There had been a few disagreements, and not everyone seemed to be on good terms. Still, they had things to finish, and the evening went on as planned.</p>
+  <p>Eventually, Mahmoud, Amine, Emna and Omar left La Collina, while Stou decided to stay a little longer.</p>
+  <p>He still had a few things to take care of before the big day. The activities needed some final adjustments, the materials had to be checked, and there were still arrangements to make sure everything would run smoothly.</p>
+  <p>He told the others he would finish the preparations and lock up once he was done.</p>
+  <p>The following morning, the caretaker arrived at La Collina and discovered that Stou was dead in the study.</p>
+  <p>The preparations for Integration Day had been left unfinished. What was supposed to be an exciting day had suddenly turned into something nobody expected.</p>
+  <p>The police were contacted, but until they arrived, many questions remained unanswered.</p>
+  <p class="story-final">What happened that night? Who was involved? And what was everyone hiding?</p>
+ </div>
+</section>
+
+<div class="stats-grid">
+ <div class="stat-card"><span class="stat-label">TEAM SCORE</span><strong>{{ "{:,}".format(score) }}</strong><small>POINTS EARNED</small></div>
+ <div class="stat-card"><span class="stat-label">CHALLENGES SOLVED</span><strong>{{ solves }}<i>/12</i></strong><small>TEAM PROGRESS</small></div>
+ <div class="stat-card"><span class="stat-label">CURRENT TEAM</span><strong class="team-stat">{{ team.name }}</strong><small>INVESTIGATION UNIT</small></div>
+</div>
+<section class="section-block">
+ <div class="section-title"><div><div class="eyebrow">THE FOUR SUSPECTS</div><h2>Investigation progress</h2></div><a class="text-link" href="{{ url_for('challenges') }}">Open case files ↗</a></div>
+ <div class="character-grid">
+ {% for group in progress %}
+  {% set count = group.challenges|selectattr('solved')|list|length %}
+  <a class="character-card" href="{{ url_for('challenges') }}"><div class="character-icon">{{ group.icon }}</div><div class="character-name">{{ group.name }}</div><p>{{ group.description }}</p><div class="progress-meta"><span>{{ count }} / 3 SOLVED</span><span>{{ (count/3*100)|int }}%</span></div><div class="progress-track"><span style="width:{{ count/3*100 }}%"></span></div></a>
+ {% endfor %}
+ </div>
+</section>
+<section class="bottom-grid">
+ <div class="panel"><div class="eyebrow">FINAL DOSSIER</div><h2>Who killed Stu?</h2><p class="muted">Assemble the evidence gathered across all four suspect files. The final investigation unlocks when your team solves all twelve challenges.</p><div class="locked-line">{% if final_unlocked %}<span class="green-dot"></span> FINAL DOSSIER UNLOCKED{% else %}<span class="lock">▣</span> LOCKED · {{ 12-solves }} SOLVES REMAINING{% endif %}</div></div>
+ <div class="panel panel-accent"><div class="eyebrow">TEAM INVITE CODE</div><div class="invite-code">{{ team.invite_code }}</div><p class="muted">Share this code with players so they can join your team.</p><button class="btn outline small" data-copy="{{ team.invite_code }}">Copy invite code</button></div>
+</section>
+{% endblock %}

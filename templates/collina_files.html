@@ -1,0 +1,4 @@
+{% extends "base.html" %}{% block title %}La Collina Files · STU{% endblock %}{% block content %}
+<div class="page-heading"><div><div class="eyebrow">ARCHIVED EVIDENCE // DOCUMENT 104</div><h1>La Collina <em>Files.</em></h1><p class="muted">The original case dossier. Examine every page and connect the evidence.</p></div><div class="status-pill">CASE MATERIAL</div></div>
+<section class="panel pdf-panel"><div class="pdf-toolbar"><div><div class="eyebrow">THE COLLINA FILES · CASE 104</div><strong>Incident dossier · 13 pages</strong></div><a class="btn outline small" href="{{ url_for('static', filename='documents/The_Collina_Files_Case_104.pdf') }}" target="_blank" rel="noopener">Open PDF ↗</a></div><iframe class="case-pdf" title="The Collina Files case dossier" src="{{ url_for('static', filename='documents/The_Collina_Files_Case_104.pdf') }}#view=FitH"></iframe></section>
+{% endblock %}

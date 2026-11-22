@@ -1,0 +1,1 @@
+{% extends "base.html" %}{% block title %}{{ code }} · STU{% endblock %}{% block content %}<div class="error-page"><div class="eyebrow">SYSTEM MESSAGE // {{ code }}</div><h1>{{ code }} <em>—</em> {{ message }}</h1><a class="btn outline" href="{{ url_for('index') }}">Return to case dashboard ↗</a></div>{% endblock %}

@@ -1,0 +1,6 @@
+{% extends "base.html" %}{% block title %}Final challenge · STU{% endblock %}{% block content %}
+<a class="back-link" href="{{ url_for('challenges') }}">← Back to investigation</a>
+<div class="challenge-detail"><div class="eyebrow">CLASSIFIED // FINAL DOSSIER</div><h1>Who killed <em>Stu?</em></h1>
+<div class="notice"><span>✦</span><div><strong>All twelve challenges are solved.</strong><p>Your team has unlocked the final investigation. Use the four hints revealed in your case files.</p></div></div>
+{% if solved %}<section class="panel"><div class="eyebrow">CASE CLOSED</div><h2>Correct identification.</h2><p class="muted">Your team has successfully identified Stu's killer.</p></section>{% else %}<section class="panel"><h2>Final submission</h2><p class="muted">{{ final_description }}</p><form method="post" class="form-stack"><input type="hidden" name="_csrf" value="{{ csrf_token() }}"><label>FINAL FLAG<input name="flag" placeholder="Securinets_fst{...}" autocomplete="off" required></label><button class="btn primary">Submit final flag ↗</button></form></section>{% endif %}</div>
+{% endblock %}

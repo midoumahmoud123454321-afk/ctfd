@@ -1,0 +1,9 @@
+{% extends "base.html" %}{% block title %}{{ challenge.title }} · STU{% endblock %}{% block content %}
+<a class="back-link" href="{{ url_for('challenges') }}">← Back to evidence index</a><div class="challenge-detail"><div class="eyebrow">CASE FILE // {{ "%02d"|format(challenge.slot) }}</div><h1>{{ challenge.title }}</h1>
+{% if challenge.active and challenge.flag_hash %}
+  <div class="panel"><div class="challenge-reward"><span class="eyebrow">CURRENT FLAG REWARD</span><strong>+{{ available_points }} POINTS</strong><small>Points may decrease as other teams solve this challenge first.</small></div>
+  {% if challenge.description %}<div class="challenge-description">{{ challenge.description }}</div>{% endif %}
+  {% if media %}<div class="challenge-media">{% for item in media %}{% if item.media_type == 'image' %}<img src="{{ url_for('static', filename='uploads/' ~ item.filename) }}" alt="Challenge evidence">{% else %}<video controls preload="metadata"><source src="{{ url_for('static', filename='uploads/' ~ item.filename) }}">Your browser does not support this video.</video>{% endif %}{% endfor %}</div>{% endif %}
+  <form method="post" class="form-stack"><input type="hidden" name="_csrf" value="{{ csrf_token() }}"><label>SUBMIT FLAG<input name="flag" placeholder="Securinets_fst{...}" autocomplete="off" required></label><button class="btn primary">Submit flag ↗</button></form></div>
+{% else %}<div class="notice"><span>ⓘ</span><div><strong>This case file is not published.</strong><p>The challenge slot is reserved for your future content. No flag is currently configured.</p></div></div><p class="muted">When you publish this challenge in the database, its statement and flag submission form will appear here automatically.</p>{% endif %}</div>
+{% endblock %}

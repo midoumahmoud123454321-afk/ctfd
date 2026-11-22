@@ -1,0 +1,7 @@
+{% extends "base.html" %}{% block title %}Leaderboard · STU{% endblock %}{% block content %}
+<div class="page-heading"><div><div class="eyebrow">GLOBAL RANKINGS // LIVE STANDINGS</div><h1>The <em>leaderboard.</em></h1><p class="muted">Every solved flag moves a team closer to the truth.</p></div><div class="status-pill"><span class="pulse"></span> LIVE SCORES</div></div>
+<div class="table-wrap"><table><thead><tr><th>RANK</th><th>TEAM</th><th>PLAYERS</th><th>SOLVES</th><th class="right">POINTS</th></tr></thead><tbody>
+{% for row in rows %}<tr class="{% if row.id==my_team_id %}my-row{% endif %}"><td><span class="rank">#{{ "%02d"|format(loop.index) }}</span></td><td><strong>{{ row.name }}</strong>{% if row.id==my_team_id %}<span class="you-tag">YOUR TEAM</span>{% endif %}</td><td>{{ row.members }}</td><td>{{ row.solves }} / 12</td><td class="right score-cell">{{ "{:,}".format(row.score) }}</td></tr>{% else %}<tr><td colspan="5" class="empty">No teams yet. Create one to enter the rankings.</td></tr>{% endfor %}
+</tbody></table></div>
+<p class="table-note">Scores are awarded to the team. Each team can claim each challenge once.</p>
+{% endblock %}
